@@ -17,7 +17,12 @@ app.get('/', (req, res) => {
 
 
 io.on('connection', async(socket) => {
+    socket.on('requestPing', () => {
+        socket.emit("returnPing", {yes:true})
+       
 
+
+    });
     
     
 })
