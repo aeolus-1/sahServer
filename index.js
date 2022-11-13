@@ -14,12 +14,3 @@ const io = require("socket.io")(server, {
 app.get('/', (req, res) => {
     res.send('server');
 });
-
-
-io.on('connection', async(socket) => {
-
-    socket.on('testPing', () => {
-        socket.emit("testPingResponse", {yes:true})
-       
-    })
-})
