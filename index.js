@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
 var avalibleArmys = {}
 
 
+function findAndMatchingEnemys() {
+    
+}
+
 io.on('connection', async(socket) => {
     socket.on('requestPing', () => {
         socket.emit("returnPing", {yes:true})
@@ -23,17 +27,25 @@ io.on('connection', async(socket) => {
 
 
     });
-    socket.on('submitArmy', (army) => {
+    socket.on('submitArmy', (data) => {
+
+        var armyOb = JSON.parse(data.army)
+
+        if (avalibleArmys[data.turn] == undefined) avalibleArmys[data.turn] = {}
         
-       console.log(army)
+        avalibleArmys[data.turn][army.id] = {
+           string:armyOb,
+           timeStamp:(new Date().getTime())
+        }
 
 
     });
-    socket.on('getArmy', (army) => {
-        
+    
+    socket.on('getList', (army) => {
+        socket.emit("returningList", avalibleArmys)
  
  
-     });
+    });
 
     
     
