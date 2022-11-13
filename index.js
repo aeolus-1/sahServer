@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
     res.send('server');
 });
 
-
+var avalibleArmys = {}
 
 
 io.on('connection', async(socket) => {
@@ -23,6 +23,19 @@ io.on('connection', async(socket) => {
 
 
     });
+    socket.on('submitArmy', (army) => {
+        
+       console.log(army)
+
+
+    });
+    socket.on('getArmy', (army) => {
+        
+ 
+ 
+     });
+
+    
     
     
 })
