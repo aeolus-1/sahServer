@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 var avalibleArmys = {}
 
 
-
+var awaitingCollection = {}
 
 var gsocket;
 
@@ -47,6 +47,11 @@ io.on('connection', async(socket) => {
  
  
     });
+    socket.on('request', (id) => {
+        socket.emit("returningArmyRequest", awaitingCollection[id])
+ 
+ 
+    });
 
     
     
@@ -63,16 +68,14 @@ function findAndMatchingEnemys() {
         var currentArmys = Object.keys(turn)
         for (let j = 0; j < currentArmys.length; j+=2) {
             if (avalibleArmys[turns[i]][currentArmys[j]]!=undefined&&avalibleArmys[turns[i]][currentArmys[j+1]]!=undefined) {
-                gsocket.emit("returningList", avalibleArmys)
-
-                gsocket.emit("returnArmy", {
+                awaitingCollection[currentArmys[j]] = {
                     for:currentArmys[j],
                     army:avalibleArmys[turns[i]][currentArmys[j]],
-                })
-                gsocket.emit("returnArmy", {
+                }
+                awaitingCollection[currentArmys[j+1]] = {
                     for:currentArmys[j+1],
                     army:avalibleArmys[turns[i]][currentArmys[j+1]],
-                })
+                }
                 
                 delete avalibleArmys[turns[i]][currentArmys[j]]
                 delete avalibleArmys[turns[i]][currentArmys[j+1]]
