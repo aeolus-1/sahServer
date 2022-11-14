@@ -64,6 +64,7 @@ io.on('connection', async(socket) => {
                     })
                     delete avalibleArmys[currentArmys[i]]
                     delete avalibleArmys[currentArmys[i+1]]
+                    break
                 }
                 
             }
