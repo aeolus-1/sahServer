@@ -33,7 +33,7 @@ io.on('connection', async(socket) => {
 
         if (avalibleArmys[data.turn] == undefined) avalibleArmys[data.turn] = {}
         
-        avalibleArmys[data.turn][army.id] = {
+        avalibleArmys[data.turn][data.id] = {
            string:armyOb,
            timeStamp:(new Date().getTime())
         }
