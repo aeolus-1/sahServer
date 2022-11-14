@@ -18,9 +18,10 @@ var avalibleArmys = {}
 
 
 
-
+var gsocket;
 
 io.on('connection', async(socket) => {
+    gsocket = socket
     socket.on('requestPing', () => {
         socket.emit("returnPing", {yes:true})
        
@@ -47,39 +48,41 @@ io.on('connection', async(socket) => {
  
     });
 
-    function findAndMatchingEnemys() {
-        var turns = Object.keys(avalibleArmys)
-        for (let i = 0; i < turns.length; i++) {
-            const turn = avalibleArmys[turns[i]];
-            var currentArmys = Object.keys(turn)
-            for (let j = 0; j < currentArmys.length; j+=2) {
-                if (avalibleArmys[turns[i]][currentArmys[j]]!=undefined&&avalibleArmys[turns[i]][currentArmys[j+1]]!=undefined) {
-                    socket.emit("returningList", avalibleArmys)
-
-                    socket.emit("returnArmy", {
-                        for:currentArmys[j],
-                        army:avalibleArmys[turns[i]][currentArmys[j]],
-                    })
-                    socket.emit("returnArmy", {
-                        for:currentArmys[j+1],
-                        army:avalibleArmys[turns[i]][currentArmys[j+1]],
-                    })
-                    
-                    delete avalibleArmys[turns[i]][currentArmys[j]]
-                    delete avalibleArmys[turns[i]][currentArmys[j+1]]
-                    break
-                }
-                
-            }
     
-        }
-    }
+    
     setInterval(() => {
         findAndMatchingEnemys()
     }, 100);
     
 })
 
+function findAndMatchingEnemys() {
+    var turns = Object.keys(avalibleArmys)
+    for (let i = 0; i < turns.length; i++) {
+        const turn = avalibleArmys[turns[i]];
+        var currentArmys = Object.keys(turn)
+        for (let j = 0; j < currentArmys.length; j+=2) {
+            if (avalibleArmys[turns[i]][currentArmys[j]]!=undefined&&avalibleArmys[turns[i]][currentArmys[j+1]]!=undefined) {
+                gsocket.emit("returningList", avalibleArmys)
+
+                gsocket.emit("returnArmy", {
+                    for:currentArmys[j],
+                    army:avalibleArmys[turns[i]][currentArmys[j]],
+                })
+                gsocket.emit("returnArmy", {
+                    for:currentArmys[j+1],
+                    army:avalibleArmys[turns[i]][currentArmys[j+1]],
+                })
+                
+                delete avalibleArmys[turns[i]][currentArmys[j]]
+                delete avalibleArmys[turns[i]][currentArmys[j+1]]
+                break
+            }
+            
+        }
+
+    }
+}
 
 
 
