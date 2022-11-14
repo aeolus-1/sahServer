@@ -17,7 +17,18 @@ var avalibleArmys = {}
 
 
 function findAndMatchingEnemys() {
+    var turns = Object.keys(avalibleArmys)
+    for (let i = 0; i < turns.length; i++) {
+        const turn = avalibleArmys[turns[i]];
+        var currentArmys = Object.keys(turn)
+        for (let i = 0; i < currentArmys.length; i+=1) {
+            if (currentArmys[i]==undefined && currentArmys[i+1]==undefined) {
+                console.log(currentArmys[i], currentArmys[i+1])
+            }
+            
+        }
 
+    }
 }
 
 io.on('connection', async(socket) => {
@@ -44,6 +55,7 @@ io.on('connection', async(socket) => {
     socket.on('getList', (army) => {
         console.log(avalibleArmys)
         socket.emit("returningList", avalibleArmys)
+        findAndMatchingEnemys()
  
  
     });
