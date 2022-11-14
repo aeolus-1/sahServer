@@ -19,6 +19,7 @@ var avalibleArmys = {}
 
 
 
+
 io.on('connection', async(socket) => {
     socket.on('requestPing', () => {
         socket.emit("returnPing", {yes:true})
@@ -51,19 +52,21 @@ io.on('connection', async(socket) => {
         for (let i = 0; i < turns.length; i++) {
             const turn = avalibleArmys[turns[i]];
             var currentArmys = Object.keys(turn)
-            for (let i = 0; i < currentArmys.length; i+=2) {
-                if (currentArmys[i]!=undefined&&currentArmys[i+1]!=undefined) {
-                    console.log(currentArmys[i], currentArmys[i+1])
+            for (let j = 0; j < currentArmys.length; j+=2) {
+                if (avalibleArmys[turns[i]][currentArmys[j]]!=undefined&&avalibleArmys[turns[i]][currentArmys[j+1]]!=undefined) {
+                    console.log(currentArmys[j], currentArmys[j+1])
+
                     socket.emit("returnArmy", {
-                        for:currentArmys[i],
-                        army:avalibleArmys[currentArmys[i+1]],
+                        for:currentArmys[j],
+                        army:avalibleArmys[turns[i]][currentArmys[j]],
                     })
                     socket.emit("returnArmy", {
-                        for:currentArmys[i+1],
-                        army:avalibleArmys[currentArmys[i]],
+                        for:currentArmys[j+1],
+                        army:avalibleArmys[turns[i]][currentArmys[j+1]],
                     })
-                    delete avalibleArmys[currentArmys[i]]
-                    delete avalibleArmys[currentArmys[i+1]]
+                    
+                    delete avalibleArmys[turns[i]][currentArmys[j]]
+                    delete avalibleArmys[turns[i]][currentArmys[j+1]]
                     break
                 }
                 
