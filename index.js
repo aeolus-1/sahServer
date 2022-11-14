@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 var avalibleArmys = {}
 
 
-var awaitingCollection = {}
 
 var gsocket;
 
@@ -43,44 +42,27 @@ io.on('connection', async(socket) => {
     }); 
     socket.on('getList', (army) => {
         console.log(avalibleArmys)
-        socket.emit("returningList", {a:avalibleArmys,aw:awaitingCollection})
+        socket.emit("returningList", {a:avalibleArmys})
  
  
     });
-    socket.on('request', (id) => {
-        
-        socket.emit("returningArmyRequest", awaitingCollection[id.id])
- 
- 
-    });
+    
 
     
     
-    setInterval(() => {
-        findAndMatchingEnemys()
-    }, 100);
+    
     
 })
 
-function findAndMatchingEnemys() {
+function testForOld() {
     var turns = Object.keys(avalibleArmys)
     for (let i = 0; i < turns.length; i++) {
         const turn = avalibleArmys[turns[i]];
         var currentArmys = Object.keys(turn)
-        for (let j = 0; j < currentArmys.length; j+=2) {
-            if (avalibleArmys[turns[i]][currentArmys[j]]!=undefined&&avalibleArmys[turns[i]][currentArmys[j+1]]!=undefined) {
-                awaitingCollection[currentArmys[j]] = {
-                    for:currentArmys[j],
-                    army:avalibleArmys[turns[i]][currentArmys[j+1]],
-                }
-                awaitingCollection[currentArmys[j+1]] = {
-                    for:currentArmys[j+1],
-                    army:avalibleArmys[turns[i]][currentArmys[j]],
-                }
-                
+        for (let j = 0; j < currentArmys.length; j+=1) {
+            var ob = avalibleArmys[turns[i]][currentArmys[j]]
+            if (Math.abs((new Date().getTime())-ob.timeStamp)>(60/1000)) {
                 delete avalibleArmys[turns[i]][currentArmys[j]]
-                delete avalibleArmys[turns[i]][currentArmys[j+1]]
-                break
             }
             
         }
@@ -88,6 +70,9 @@ function findAndMatchingEnemys() {
     }
 }
 
+setInterval(() => {
+    testForOld()
+}, 100);
 
 
 server.listen(process.env.PORT || 3000, () => {
