@@ -62,7 +62,7 @@ function testForOld() {
         for (let j = 0; j < currentArmys.length; j+=1) {
             var ob = avalibleArmys[turns[i]][currentArmys[j]]
             if (Math.abs(ob.timeStamp-(new Date().getTime()))>(60*1000)) {
-                //delete avalibleArmys[turns[i]][currentArmys[j]]
+                delete avalibleArmys[turns[i]][currentArmys[j]]
             }
             
         }
