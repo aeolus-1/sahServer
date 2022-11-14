@@ -23,6 +23,7 @@ function findAndMatchingEnemys() {
         var currentArmys = Object.keys(turn)
         for (let i = 0; i < currentArmys.length; i+=1) {
             if (currentArmys[i]!=undefined&&currentArmys[i+1]!=undefined) {
+                console.log(currentArmys[i], currentArmys[i+1])
                 socket.emit("returnArmy", {
                     for:currentArmys[i],
                     army:avalibleArmys[currentArmys[i+1]],
