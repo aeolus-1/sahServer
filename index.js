@@ -48,7 +48,7 @@ io.on('connection', async(socket) => {
  
     });
     socket.on('request', (id) => {
-        socket.emit("returningArmyRequest", awaitingCollection[id])
+        socket.emit("returningArmyRequest", awaitingCollection[id.id])
  
  
     });
