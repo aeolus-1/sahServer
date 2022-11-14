@@ -70,11 +70,11 @@ function findAndMatchingEnemys() {
             if (avalibleArmys[turns[i]][currentArmys[j]]!=undefined&&avalibleArmys[turns[i]][currentArmys[j+1]]!=undefined) {
                 awaitingCollection[currentArmys[j]] = {
                     for:currentArmys[j],
-                    army:avalibleArmys[turns[i]][currentArmys[j]],
+                    army:avalibleArmys[turns[i]][currentArmys[j+1]],
                 }
                 awaitingCollection[currentArmys[j+1]] = {
                     for:currentArmys[j+1],
-                    army:avalibleArmys[turns[i]][currentArmys[j+1]],
+                    army:avalibleArmys[turns[i]][currentArmys[j]],
                 }
                 
                 delete avalibleArmys[turns[i]][currentArmys[j]]
