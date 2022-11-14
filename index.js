@@ -17,7 +17,7 @@ var avalibleArmys = {}
 
 
 function findAndMatchingEnemys() {
-    
+
 }
 
 io.on('connection', async(socket) => {
@@ -42,6 +42,7 @@ io.on('connection', async(socket) => {
     });
     
     socket.on('getList', (army) => {
+        console.log(avalibleArmys)
         socket.emit("returningList", avalibleArmys)
  
  
