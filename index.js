@@ -43,7 +43,7 @@ io.on('connection', async(socket) => {
     }); 
     socket.on('getList', (army) => {
         console.log(avalibleArmys)
-        socket.emit("returningList", avalibleArmys)
+        socket.emit("returningList", {a:avalibleArmys,aw:awaitingCollection})
  
  
     });
