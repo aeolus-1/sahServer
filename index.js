@@ -51,7 +51,7 @@ io.on('connection', async(socket) => {
         for (let i = 0; i < turns.length; i++) {
             const turn = avalibleArmys[turns[i]];
             var currentArmys = Object.keys(turn)
-            for (let i = 0; i < currentArmys.length; i+=1) {
+            for (let i = 0; i < currentArmys.length; i+=2) {
                 if (currentArmys[i]!=undefined&&currentArmys[i+1]!=undefined) {
                     console.log(currentArmys[i], currentArmys[i+1])
                     socket.emit("returnArmy", {
