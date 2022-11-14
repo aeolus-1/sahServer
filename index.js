@@ -35,6 +35,7 @@ io.on('connection', async(socket) => {
         
         avalibleArmys[data.turn][data.id] = {
            string:armyOb,
+           name:data.name,
            timeStamp:(new Date().getTime())
         }
 
